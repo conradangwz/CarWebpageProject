@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="CarWebpageProject.csproj" />
+  <Project Path="src/CarFunctions/CarFunctions/CarFunctions.csproj" Id="46d5dcbc-ca82-49db-97b3-d816c6c3a8dc" />
+  <Project Path="src/CarSimulator/CarSimulator.csproj" />
 </Solution>
