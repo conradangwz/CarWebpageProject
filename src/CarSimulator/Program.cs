@@ -12,8 +12,8 @@ var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionStrin
 
 var carMessage = new carMessage()
 {
-    isCharging = "true",
-    battery = "80"
+    isCharging = true,
+    battery = 80
 };
 
 var serializedMessage = JsonConvert.SerializeObject(carMessage);
@@ -27,7 +27,7 @@ await deviceClient.SendEventAsync(iotMessage);
 
 class carMessage
 {
-    public string isCharging { get; set; }
-    public string battery { get; set; }
+    public bool isCharging { get; set; }
+    public int battery { get; set; }
 }
 
