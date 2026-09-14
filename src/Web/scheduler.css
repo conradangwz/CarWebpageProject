@@ -1,189 +1,81 @@
 .scheduler-container {
-    --slot-height: 32px;
-    --day-header-height: 44px;
+    max-width: 640px;
 }
 
-.calendar-toolbar,
-.scheduler-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.calendar-range {
-    margin: 4px 0 0;
+.instructions,
+.field-hint {
     color: var(--text-muted);
     font-size: 0.875rem;
-}
-
-.selection-legend {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    font-size: 0.875rem;
-}
-
-.legend-swatch {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-    background: var(--accent);
 }
 
 .instructions {
-    margin: 20px 0 16px;
-    color: var(--text-muted);
-    font-size: 0.875rem;
+    margin: 8px 0 24px;
 }
 
-.calendar-scroll {
-    max-height: 65vh;
-    overflow: auto;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    scrollbar-gutter: stable;
-}
-
-.grid-wrapper {
-    display: grid;
-    grid-template-columns: 68px minmax(0, 1fr);
-    min-width: 700px;
-    user-select: none;
-}
-
-.time-labels {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background: var(--surface);
-    border-right: 1px solid var(--border-color);
-}
-
-.time-heading,
-.day-header {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--day-header-height);
-    background: var(--surface-muted);
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text);
-    font-size: 0.875rem;
+#schedule-form label {
+    display: block;
+    margin-bottom: 8px;
     font-weight: 600;
 }
 
-.time-label {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    height: var(--slot-height);
-    padding: 2px 10px 0 0;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-}
-
-.day-end {
-    height: 24px;
-    border-top: 1px solid var(--border-color);
-    background: var(--surface-muted);
-}
-
-.time-label.day-end {
-    padding-top: 3px;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-
-.day-column {
-    min-width: 0;
-    border-right: 1px solid var(--border-color);
-}
-
-.day-column:last-child {
-    border-right: 0;
-}
-
-button.time-slot {
+#scheduled-start {
     display: block;
     width: 100%;
-    height: var(--slot-height);
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-bottom: 1px solid var(--border-color);
-    border-radius: 0;
+    min-width: 0;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     background: var(--surface);
-    scroll-margin-top: var(--day-header-height);
-    cursor: crosshair;
+    color: var(--text);
 }
 
-button.time-slot.half-hour {
-    background: var(--surface-muted);
-}
-
-button.time-slot:hover {
-    background: var(--accent-soft);
-}
-
-button.time-slot.selected {
-    background: var(--accent);
-    border-bottom-color: #ffffff35;
-}
-
-button.time-slot.selected:hover {
-    background: var(--accent-hover);
-}
-
-button.time-slot.selected::after {
-    content: "✓";
-    color: var(--surface);
-    font-size: 0.875rem;
-}
-
-button.time-slot:focus-visible {
-    position: relative;
-    z-index: 1;
-    outline-offset: -3px;
-}
-
-.scheduler-footer {
-    margin-top: 20px;
-}
-
-#selection-count {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.875rem;
+.field-hint {
+    margin: 8px 0 0;
+    overflow-wrap: anywhere;
 }
 
 .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 24px;
+}
+
+.saved-schedule {
+    margin-top: 28px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--surface-muted);
+}
+
+#scheduled-summary {
+    margin: 8px 0 0;
+    color: var(--accent);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.browser-notice {
+    margin: 16px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--text);
+    font-size: 0.875rem;
+}
+
+.schedule-help {
+    margin-top: 24px;
+}
+
+#schedule-message:empty {
+    display: none;
 }
 
 @media (max-width: 600px) {
-    .calendar-scroll {
-        max-height: 60vh;
-    }
-
-    .scheduler-footer,
     .actions {
-        align-items: stretch;
-        width: 100%;
-    }
-
-    .actions button {
-        flex: 1;
+        flex-direction: column;
     }
 }
