@@ -1,11 +1,13 @@
+using Azure.Data.Tables;
 using Azure.Messaging.EventHubs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Devices;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.Design.Serialization;
 using System.Net.Http.Json;
-using Azure.Data.Tables;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -44,6 +46,69 @@ public class CarFunctions
         };
 
         return new OkObjectResult(carStatus);
+    }
+
+    [Function("SetCharging")]
+    public async Task<IActionResult> SetCharging([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+    {
+        // Read request from frontend
+        SetChargingRequest? carMessage;
+
+        try
+        {
+            // Ignore if the stream does not support seeking
+            carMessage = await JsonSerializer.DeserializeAsync<SetChargingRequest>(req.Body);
+
+        }
+        catch (JsonException)
+        {
+            return new BadRequestObjectResult(new
+            {
+                error = "Send valid JSON with isCharging set to true or false."
+            });
+        }
+            
+
+        if (carMessage == null || carMessage.IsCharging == null)
+        {
+            return new BadRequestObjectResult(new
+            {
+                error = "isCharging is required and must be true or false."
+            });
+        }
+
+        bool requestedState = carMessage.IsCharging.Value;
+
+        // Get IoT Hub service connection string
+        var connectionString =
+            Environment.GetEnvironmentVariable("IoTHubServiceConnectionString")
+            ?? throw new InvalidOperationException(
+                "IoTHubServiceConnectionString is missing.");
+
+        // Connect to IoT Hub
+        using var serviceClient =
+            ServiceClient.CreateFromConnectionString(connectionString);
+
+        // Create direct method call
+        var method = new CloudToDeviceMethod("SetCharging");
+
+        // Send only isCharging to the simulated car
+        method.SetPayloadJson(
+            JsonSerializer.Serialize(new
+            {
+                isCharging = requestedState
+            })
+        );
+
+        // Send command to device
+        var result = await serviceClient.InvokeDeviceMethodAsync("conrad-iot-device-1", method);
+
+        // Return result to frontend
+        return new OkObjectResult(new
+        {
+            isCharging = requestedState,
+            deviceStatus = result.Status
+        });
     }
 
     [Function("ProcessTelemetry")]
@@ -106,11 +171,17 @@ public class CarFunctions
 public class CarMessage
 {
     [JsonPropertyName("isCharging")]
-    public required bool IsCharging { get; set; }
+    public bool IsCharging { get; set; }
 
     [JsonPropertyName("battery")]
-    public required int Battery { get; set; }
+    public int? Battery { get; set; }
 
     [JsonPropertyName("date")]
-    public required DateTimeOffset Date { get; set; }
+    public DateTimeOffset Date { get; set; }
+}
+
+public class SetChargingRequest
+{
+    [JsonPropertyName("isCharging")]
+    public bool? IsCharging { get; set; }
 }
