@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1>My Car</h1>
+
+        <p>Battery: <strong id="battery">—</strong></p>
+        <progress id="battery-bar"
+                  value="0"
+                  max="100"
+                  aria-label="Battery charge">
+        </progress>
+
+        <p>Status: <strong id="charging">—</strong></p>
+        <p>Last telemetry: <span id="last-updated">—</span></p>
+
+        <p id="message" role="status">Loading car status…</p>
+    </main>
+</body>
+</html>

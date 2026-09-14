@@ -38,36 +38,12 @@ public class CarFunctions
         var entity = response.Value;
         var carStatus = new
         {
-            Battery = entity["battery"].ToString(),
-            IsCharging = bool.Parse(entity["isCharging"].ToString()),
-            Date = entity["date"].ToString()
+            battery = entity.GetInt32("battery"),
+            isCharging = entity.GetBoolean("isCharging"),
+            date = entity.GetDateTimeOffset("date")
         };
 
         return new OkObjectResult(carStatus);
-    }
-
-    [Function("StartCharging")]
-    public async Task<IActionResult> StartCharging([HttpTrigger(AuthorizationLevel.Function, "post", "put")] HttpRequest req)
-    {
-        _logger.LogInformation("Starting charging.");
-
-        return new OkObjectResult("start charging");
-    }
-
-    [Function("StopCharging")]
-    public async Task<IActionResult> StopCharging([HttpTrigger(AuthorizationLevel.Function, "post", "put")] HttpRequest req)
-    {
-        _logger.LogInformation("Stopping charging.");
-
-        return new OkObjectResult("stop charging");
-    }
-
-    [Function("SetChargingSchedule")]
-    public async Task<IActionResult> SetChargingSchedule([HttpTrigger(AuthorizationLevel.Function, "post", "put")] HttpRequest req)
-    {
-        _logger.LogInformation("Setting charging schedule.");
-
-        return new OkObjectResult("set charging schedule");
     }
 
     [Function("ProcessTelemetry")]
