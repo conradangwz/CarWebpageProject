@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".env" />
+  </Folder>
   <Project Path="src/CarFunctions/CarFunctions.csproj" Id="01a58023-5c38-4032-ac2e-a112a8c025bf" />
   <Project Path="src/CarSimulator/CarSimulator.csproj" />
 </Solution>

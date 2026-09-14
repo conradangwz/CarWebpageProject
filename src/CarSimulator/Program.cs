@@ -36,7 +36,7 @@ while (true)
 
     // send message to cloud
     await deviceClient.SendEventAsync(iotMessage);
-    //await Task.Delay(10000);
+    await Task.Delay(10000);
 
 }
 
