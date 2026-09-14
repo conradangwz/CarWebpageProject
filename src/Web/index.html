@@ -1,31 +1,52 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Car Dashboard</title>
+    <title>Dashboard | My Car</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
 </head>
 
 <body>
-    <main>
-        <h1>My Car</h1>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <a class="brand" href="index.html">My Car</a>
+            <div class="nav-links">
+                <a href="index.html" aria-current="page">Dashboard</a>
+                <a href="scheduler.html">Charging schedule</a>
+            </div>
+        </nav>
+    </header>
 
-        <p>Battery: <strong id="battery">—</strong></p>
-        <progress id="battery-bar" value="0" max="100" aria-label="Battery charge">
-        </progress>
+    <main class="page-container dashboard-container">
+        <header class="page-heading">
+            <h1>Car dashboard</h1>
+            <p>Check your battery and control charging.</p>
+        </header>
 
-        <p>Status: <strong id="charging">—</strong></p>
-        <p>Last telemetry: <span id="last-updated">—</span></p>
+        <section class="panel" aria-labelledby="battery-heading">
+            <div class="battery-summary">
+                <h2 id="battery-heading">Battery level</h2>
+                <strong id="battery">—</strong>
+            </div>
+            <progress id="battery-bar" value="0" max="100" aria-label="Battery charge">
+            </progress>
 
-        <button id="charging-toggle" type="button" onclick="toggleCharging()" disabled>
-            Loading…
-        </button>
+            <div class="car-details">
+                <p>Status <strong id="charging">—</strong></p>
+                <p>Last telemetry <span id="last-updated">—</span></p>
+            </div>
 
-        <p id="message" role="status">Loading car status…</p>
-        <p id="command-message" role="status"></p>
+            <button id="charging-toggle" class="charging-button" type="button"
+                onclick="toggleCharging()" disabled>
+                Loading…
+            </button>
+
+            <p id="message" class="status-message" role="status">Loading car status…</p>
+            <p id="command-message" class="command-message" role="status"></p>
+        </section>
     </main>
 </body>
 

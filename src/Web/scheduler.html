@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Charging schedule | My Car</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="scheduler.css">
+    <script src="scheduler.js" defer></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <a class="brand" href="index.html">My Car</a>
+            <div class="nav-links">
+                <a href="index.html">Dashboard</a>
+                <a href="scheduler.html" aria-current="page">Charging schedule</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-container scheduler-container">
+        <header class="page-heading">
+            <h1>Charging schedule</h1>
+            <p>Select charging times for your week, in 30-minute intervals.</p>
+        </header>
+
+        <section class="panel" aria-labelledby="timetable-heading">
+            <div class="calendar-toolbar">
+                <div>
+                    <h2 id="timetable-heading">Weekly timetable</h2>
+                    <p class="calendar-range">Monday–Sunday · 00:00–23:59</p>
+                </div>
+                <span class="selection-legend">
+                    <span class="legend-swatch" aria-hidden="true"></span>
+                    Selected time
+                </span>
+            </div>
+
+            <p class="instructions" id="schedule-instructions">
+                Click and drag to select charging times,
+                Each slot is 30 minutes; the last covers 23:30 through 23:59.
+            </p>
+
+            <div class="calendar-scroll" role="region" aria-label="Weekly charging timetable"
+                aria-describedby="schedule-instructions" tabindex="0">
+                <div class="grid-wrapper">
+                    <div class="time-labels" id="timeLabels" aria-hidden="true"></div>
+                    <div class="grid-container" id="gridContainer"></div>
+                </div>
+            </div>
+
+            <div class="scheduler-footer">
+                <p id="selection-count">No times selected</p>
+                <div class="actions">
+                    <button id="saveBtn" type="button">Save schedule</button>
+                    <button id="clearBtn" type="button" class="secondary">Clear all</button>
+                </div>
+            </div>
+
+            <p id="schedule-message" class="status-message" role="status">
+                Selections are saved in this browser. They are not yet sent to your car.
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>
