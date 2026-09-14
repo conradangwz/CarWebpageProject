@@ -1,12 +1,11 @@
-﻿using Microsoft.Azure.Devices.Client;
+﻿using Azure.Core;
+using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
 using System.Text;
 
 DotNetEnv.Env.TraversePath().Load(".env");
 
 string deviceConnectionString = Environment.GetEnvironmentVariable("DEVICE_CONNECTION_STRING");
-
-//Console.WriteLine(deviceConnectionString);
 
 var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString);
 
@@ -16,18 +15,35 @@ var carMessage = new carMessage()
     battery = 80
 };
 
-var serializedMessage = JsonConvert.SerializeObject(carMessage);
+while (true)
+{
+    if (carMessage.isCharging && carMessage.battery < 100)
+    {
+        carMessage.battery += 1;
+    }
 
-var iotMessage = new Message(Encoding.UTF8.GetBytes(serializedMessage));
+    if (carMessage.battery >= 100)
+    {
+        carMessage.isCharging = false;
+    }
 
-// send message to cloud
-await deviceClient.SendEventAsync(iotMessage);
+    
+    carMessage.date = DateTime.UtcNow.ToString("O");
 
-//Console.ReadLine();
+    var serializedMessage = JsonConvert.SerializeObject(carMessage);
+
+    var iotMessage = new Message(Encoding.UTF8.GetBytes(serializedMessage));
+
+    // send message to cloud
+    await deviceClient.SendEventAsync(iotMessage);
+    //await Task.Delay(10000);
+
+}
 
 class carMessage
 {
     public bool isCharging { get; set; }
     public int battery { get; set; }
+    public string date { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 }
 
