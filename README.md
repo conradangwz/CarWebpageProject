@@ -6,7 +6,7 @@ An Azure IoT demo that shows a simulated car's battery level and charging state,
 
 ## Try the demo
 
-1. Ask the project owner for a demo access key and arrange for the simulator to be running.
+1. Ask the project owner for a demo access key and run the simulator locally (assuming environment is set up)
 2. Open the dashboard and select **Enter access key**. Enter it once to use both pages and other tabs in the same browser.
 3. Check the battery status and try **Start Charging / Stop Charging**.
 4. To test scheduling, stop charging below 100%, choose a start time a few minutes ahead, and keep the website open and computer awake.
