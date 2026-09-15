@@ -12,7 +12,7 @@ var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionStrin
 var carMessage = new carMessage()
 {
     isCharging = true,
-    battery = 90
+    battery = 0
 };
 
 

@@ -2,7 +2,8 @@
 window.ChargingSchedule = (() => {
     const storageKey = "carChargingSchedule";
     const lockName = "car-charging-schedule";
-    const startUrl = "http://localhost:7037/api/SetCharging";
+    // const startUrl = "http://localhost:7037/api/SetCharging";
+    const startUrl = `${carApi.baseUrl}/api/SetCharging`;
     const maxLateMs = 60000;
     const statusElement = document.getElementById("scheduled-charging-status");
     let checking = false;
@@ -59,14 +60,18 @@ window.ChargingSchedule = (() => {
                 const state = read();
                 if (state?.status !== "pending" || Date.now() < Date.parse(state.startUtc)) return null;
                 if (Date.now() - Date.parse(state.startUtc) > maxLateMs) {
-                    write({ ...state, status: "missed",
-                        message: "The scheduled time was missed. Choose a new time to try again." });
+                    write({
+                        ...state, status: "missed",
+                        message: "The scheduled time was missed. Choose a new time to try again."
+                    });
                     return null;
                 }
 
                 // Consume the schedule BEFORE sending: refreshes and other tabs cannot retry it.
-                write({ ...state, status: "attempted",
-                    message: "Scheduled Start requested. Check the dashboard for confirmation; this schedule will not run again." });
+                write({
+                    ...state, status: "attempted",
+                    message: "Scheduled Start requested. Check the dashboard for confirmation; this schedule will not run again."
+                });
                 return state;
             });
             if (!claimed) return;
@@ -75,7 +80,10 @@ window.ChargingSchedule = (() => {
             try {
                 const response = await fetch(startUrl, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...carApi.headers()
+                    },
                     body: JSON.stringify({ isCharging: true }),
                     keepalive: true,
                     signal: AbortSignal.timeout(15000)
@@ -89,13 +97,17 @@ window.ChargingSchedule = (() => {
                         ? "The battery is already full. Scheduled charging did not start."
                         : "The car did not accept the scheduled Start. Check the dashboard.");
                 }
-                outcome = { status: "sent",
-                    message: "The car accepted the scheduled Start. This schedule is complete." };
+                outcome = {
+                    status: "sent",
+                    message: "The car accepted the scheduled Start. This schedule is complete."
+                };
             } catch (error) {
-                outcome = { status: "failed", message:
-                    error.name === "TimeoutError" || error instanceof TypeError || error instanceof SyntaxError
-                        ? "Scheduled Start could not be confirmed. Check the connection and dashboard before trying again. It will not retry automatically."
-                        : error.message };
+                outcome = {
+                    status: "failed", message:
+                        error.name === "TimeoutError" || error instanceof TypeError || error instanceof SyntaxError
+                            ? "Scheduled Start could not be confirmed. Check the connection and dashboard before trying again. It will not retry automatically."
+                            : error.message
+                };
             }
 
             await withLock(() => {

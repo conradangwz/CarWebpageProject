@@ -1,5 +1,8 @@
-const apiUrl = "http://localhost:7037/api/GetCarStatus";
-const setChargingUrl = "http://localhost:7037/api/SetCharging";
+// const apiUrl = "http://localhost:7037/api/GetCarStatus";
+// const setChargingUrl = "http://localhost:7037/api/SetCharging";
+
+const apiUrl = `${carApi.baseUrl}/api/GetCarStatus`;
+const setChargingUrl = `${carApi.baseUrl}/api/SetCharging`;
 
 const battery = document.getElementById("battery");
 const batteryBar = document.getElementById("battery-bar");
@@ -38,6 +41,7 @@ function updateChargingButton() {
 async function refreshStatus() {
     try {
         const response = await fetch(apiUrl, {
+            headers: carApi.headers(),
             cache: "no-store",
             signal: AbortSignal.timeout(5000)
         });
@@ -112,7 +116,8 @@ async function toggleCharging() {
         const response = await fetch(setChargingUrl, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ...carApi.headers()
             },
             body: JSON.stringify({
                 isCharging: requestedState

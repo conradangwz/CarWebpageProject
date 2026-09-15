@@ -7,6 +7,7 @@
     <title>Dashboard | My Car</title>
     <link rel="stylesheet" href="styles.css">
     <script src="charging-schedule.js" defer></script>
+    <script src="api-config.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 
@@ -17,6 +18,9 @@
             <div class="nav-links">
                 <a href="index.html" aria-current="page">Dashboard</a>
                 <a href="scheduler.html">Charging schedule</a>
+                <button type="button" onclick="carApi.enterKey()">
+                    Enter access key
+                </button>
             </div>
         </nav>
     </header>
@@ -40,8 +44,7 @@
                 <p>Last telemetry <span id="last-updated">—</span></p>
             </div>
 
-            <button id="charging-toggle" class="charging-button" type="button"
-                onclick="toggleCharging()" disabled>
+            <button id="charging-toggle" class="charging-button" type="button" onclick="toggleCharging()" disabled>
                 Loading…
             </button>
 
