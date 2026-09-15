@@ -6,7 +6,7 @@ Car Charging Dashboard lets car owners view battery status, start or stop chargi
 
 **[Live dashboard](https://green-smoke-08ae67200.5.azurestaticapps.net/)** · **[Charging schedule](https://green-smoke-08ae67200.5.azurestaticapps.net/scheduler.html)**
 
-[Use the demo](#installation-and-usage) · [Set up for development](#development-setup) · [Contributing](#contributing) · [Known issues](#known-issues-and-limitations)
+[Use the demo](#installation-and-usage) · [Set up for development](#development-setup) · [Known issues](#known-issues-and-limitations)
 
 ## How it works
 
@@ -230,19 +230,6 @@ Deployed requests require `x-functions-key`; POST also requires `Content-Type: a
 GitHub Actions deploys `src/Web` on pushes to `main`. Publish `CarFunctions` separately to a Function App supporting .NET 10 isolated. Configure real Azure values for `AzureWebJobsStorage`, `IotHubEventsConnection`, and `IoTHubServiceConnectionString`, and allow your website's origin in Function App CORS.
 
 Share a non-administrative host key privately so it works for both HTTP functions; never share `_master`. The browser saves the entered demo key in `localStorage`.
-
-## Contributing
-
-For a bug report, include the steps to reproduce it, expected and actual behavior, and relevant error messages. Discuss larger changes before implementing them.
-
-For a pull request:
-
-- Keep the change focused and explain what it fixes or adds.
-- Run `dotnet build CarWebpageProject.slnx` and the manual charging checks in [Development setup](#development-setup); describe the results.
-- Update this README when setup or behavior changes.
-- Exclude connection strings, access keys, `.env`, local settings, and generated Azurite data.
-
-There is currently no automated test suite.
 
 ## Known issues and limitations
 
