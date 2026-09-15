@@ -2,7 +2,7 @@ window.carApi = {
     baseUrl: "https://carcharging-b7g8caccbjfsdpdu.australiaeast-01.azurewebsites.net",
 
     headers() {
-        const key = sessionStorage.getItem("car-demo-access-key");
+        const key = localStorage.getItem("car-demo-access-key");
 
         if (!key) {
             throw new Error(
@@ -22,7 +22,7 @@ window.carApi = {
             return;
         }
 
-        sessionStorage.setItem("car-demo-access-key", key.trim());
+        localStorage.setItem("car-demo-access-key", key.trim());
         window.location.reload();
     }
 };

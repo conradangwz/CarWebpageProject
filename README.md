@@ -93,7 +93,7 @@ Choose one future date and time in your local time zone, then select **Set sched
 
 The schedule survives refreshes and navigation between the two pages in the same browser. It is specific to that browser and website address; it is not saved in Azure or shared between devices.
 
-**Keep either page open, with a valid demo key entered, and keep the computer awake.** Browser suspension, closing the tab, or losing connectivity can prevent the scheduled start. For a demo, use one active tab. Web Locks coordinates attempts between tabs, but the access key is stored per tab in `sessionStorage`.
+**Keep either page open, with a valid demo key entered, and keep the computer awake.** Browser suspension, closing the tab, or losing connectivity can prevent the scheduled start. Web Locks coordinates attempts between tabs. Entering the access key on either page makes it available to both pages and other tabs on the same website in the same browser.
 
 Scheduling requires a browser that supports the Web Locks API, accessed through HTTPS or localhost.
 
@@ -294,7 +294,7 @@ For your own deployment, also update `api-config.js` to the new Function App's b
 
 Create or use a non-administrative **host key** so the same key can call both HTTP functions. Share it privately with reviewers, who enter it through the webpage. Never share the `_master` key or commit a key to the repository. [Azure Functions access keys](https://learn.microsoft.com/en-us/azure/azure-functions/function-keys-how-to).
 
-The frontend stores the entered key in `sessionStorage` and sends it through `x-functions-key`. A new tab may require the key again. This is shared access for a demo; it does not provide individual user accounts or per-car permissions.
+The frontend stores the entered key in `localStorage` and sends it through `x-functions-key`. Enter it once on either page to use the dashboard and charging schedule, including in separate tabs. It remains saved across browser restarts until the website's browser data is cleared or a replacement key is entered. Different browsers, devices, or website addresses need their own entry. This is shared access for a demo; it does not provide individual user accounts or per-car permissions.
 
 ## Manual verification
 
